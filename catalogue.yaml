@@ -30,10 +30,10 @@
       dest: /app
       remote_src: yes
 
-   - name: Install dependencies
-     community.general.npm:
+   - name: Install dependencies #shell command faster than ansible
+     ansible.builtin.command: npm install
      args:
-      chdir: /app
+       chdir: /app
 
   #  - name: Copy catalogue service # ansible copy module
   #    ansible.builtin.copy:
