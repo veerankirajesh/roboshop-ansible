@@ -57,5 +57,12 @@
       name: mongodb-org-shell
       state: present       
        
+   - name: get the categories count # product_count 0
+     ansible.builtin.command:  mongo --host mongodb.rajesh76.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+     register: product_count
 
+   - name: print the count # print value
+     ansible.builtin.debug:
+      msg: "product count: {{product_count}}"
+  
  
