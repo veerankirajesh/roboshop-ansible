@@ -32,7 +32,7 @@
 
    - name: Install npm 
      community.general.npm:
-      name: install npm
+      name: npm
       path: /app
 
 
