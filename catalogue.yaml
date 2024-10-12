@@ -37,11 +37,11 @@
 
    - name: Copy catalogue service # ansible copy module
      ansible.builtin.copy:
-     src: catalogue.service
-     dest: /etc/systemd/system/catalogue.service
+      src: catalogue.service
+      dest: /etc/systemd/system/catalogue.service
 
    - name: daemon reload and start # ansible demon module
-     ansible.builtin.systemd:
+     ansible.builtin.systemd_service:
       daemon_reload: true
 
     # let's start after the data is loaded
