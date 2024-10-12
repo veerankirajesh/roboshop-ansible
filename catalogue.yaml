@@ -28,12 +28,12 @@
      ansible.builtin.copy:
       src: /tmp/catalogue.zip
       dest: /app
-      remote_src: yes
+      remote_src: yes 
 
-   - name: Install dependencies #shell command faster than ansible
-     ansible.builtin.command: npm install
-     args:
-       chdir: /app
+  #  - name: Install dependencies #shell command faster than ansible
+  #    ansible.builtin.command: npm install
+  #    args:
+  #      chdir: /app
 
   #  - name: Copy catalogue service # ansible copy module
   #    ansible.builtin.copy:
