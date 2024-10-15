@@ -8,8 +8,8 @@
       name: maven
       state: present
 
-   - name: Add shipping roboshop # ansible adduseer module
-     ansible.builtin.shipping:
+   - name: create roboshop user # ansible adduseer module
+     ansible.builtin.user:
       name: roboshop 
 
    - name: Recursively remove app directory # ansible app directory
