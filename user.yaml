@@ -31,8 +31,8 @@
 
    - name: extract user application # ansible unarchive module
      ansible.builtin.unarchive:
-      src: /app
-      dest: /tmp/shipping.zip
+      src: /tmp
+      dest: /app/shipping.zip
       remote_src: yes 
 
    - name: Install npm 
