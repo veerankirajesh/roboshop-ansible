@@ -2,11 +2,11 @@
   hosts: redis
   become: yes
   tasks: 
-  - name: Install remirelese
-    ansible.builtin.dnf:
-     name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
-     state: present
-     disable_gpg_check: true #  Ansible to skip the GPG signature verification step.
+  - name: install remi release
+    ansible.builtin.dnf: # check pacakge will work not
+      name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+      state: present
+      disable_gpg_check: true #  Ansible to skip the GPG signature verification step.
 
   - name: enable redis # no module 
     ansible.builtin.command:  dnf module enable redis:remi-6.2 -y  
