@@ -27,7 +27,7 @@
       url: https://roboshop-builds.s3.amazonaws.com/shipping.zip
       dest: /app
 
-   - name: extract shipping application # ansible unarchive module
+   - name: extract shipping application
      ansible.builtin.unarchive:
       src: /tmp/shipping.zip
       dest: /app
