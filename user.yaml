@@ -29,10 +29,10 @@
       url: https://roboshop-builds.s3.amazonaws.com/user.zip
       dest: /tmp
 
-   - name: extract user application # ansible unarchive module
+   - name: extract shipping application
      ansible.builtin.unarchive:
-      src: /tmp
-      dest: /app/shipping.zip
+      src: /tmp/shipping.zip
+      dest: /app
       remote_src: yes 
 
    - name: Install npm 
