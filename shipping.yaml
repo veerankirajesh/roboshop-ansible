@@ -29,7 +29,7 @@
 
    - name: extract shipping application
      ansible.builtin.unarchive:
-      src: /tmp/shipping.zip
+      src: /tmp/shipping.sqlp
       dest: /app
       remote_src: yes  
 
