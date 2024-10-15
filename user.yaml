@@ -1,0 +1,86 @@
+- name: user
+  hosts: user
+  become: yes
+  tasks: 
+   - name: disable old nodejs and enable nodejs
+     ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y
+
+   - name: Install nodejs # ansible install nodejs module
+     ansible.builtin.dnf:
+      name: nodejs
+      state: present
+
+   - name: Add user roboshop # ansible adduseer module
+     ansible.builtin.user:
+      name: roboshop 
+
+   - name: Recursively remove app directory # ansible app directory
+     ansible.builtin.file:
+      path: /app
+      state: absent 
+
+   - name: create app directory # ansible app directory
+     ansible.builtin.file:
+      path: /app
+      state: directory     
+
+   - name: Download for user application # ansible download module
+     ansible.builtin.get_url:
+      url: https://roboshop-builds.s3.amazonaws.com/user.zip
+      dest: /tmp
+
+   - name: extract user application # ansible unarchive module
+     ansible.builtin.unarchive:
+      src: /tmp/user.zip
+      dest: /app
+      remote_src: yes 
+
+   - name: Install npm 
+     community.general.npm:
+      name: npm
+      path: /app
+
+
+   - name: Copy user service # ansible copy module
+     ansible.builtin.copy:
+      src: user.service
+      dest: /etc/systemd/system/user.service
+
+   - name: daemon reload and start # ansible demon module
+     ansible.builtin.systemd_service:
+      daemon_reload: true
+
+    # let's start after the data is loaded
+
+   - name: Copy mongodb repo # ansible copy module
+     ansible.builtin.copy:
+      src: mongodb.repo
+      dest: /etc/yum.repos.d/mongo.repo
+
+   - name: Install mongodb # ansible install package 
+     ansible.builtin.package:
+      name: mongodb-org-shell
+      state: present   
+          
+       
+   - name: get the categories count # product_count 0
+     ansible.builtin.command:  mongo --host mongodb.rajesh76.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+     register: product_count
+
+  #  - name: print the count # print value
+  #    ansible.builtin.debug:
+  #     msg: "product count: {{product_count}}"
+
+   - name: load user data
+     ansible.builtin.command: mongo --host mongodb.rajesh76.online < /app/schema/user.js
+     when: product_count.stdout == "0" # keep double quotes
+
+   - name: start and enable user
+     ansible.builtin.service:
+      name: user
+      state: restarted
+      enabled: yes  
+
+
+  
+ 
