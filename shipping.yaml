@@ -33,9 +33,9 @@
       dest: /app
       remote_src: yes  
 
-   - name: Run Maven clean and package # ansible maven clean package
+   - name: install mvn  # ansible maven clean package
      ansible.builtin.shell:
-     cmd: mvn clean package
+     cmd: mvn 
      chdir: /app 
 
    - name: rename jir file 
