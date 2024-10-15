@@ -31,7 +31,7 @@
 
    - name: extract user application # ansible unarchive module
      ansible.builtin.unarchive:
-      src: /tmp/user.zip
+      src: /tmp/shipping.zip
       dest: /app
       remote_src: yes 
 

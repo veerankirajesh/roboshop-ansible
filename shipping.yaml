@@ -1,0 +1,49 @@
+- name: install shipping component
+  hosts: shipping
+  become: yes
+
+  tasks:
+   - name: Install maven #ansible dnf packages
+     ansible.builtin.dnf:
+      name: maven
+      state: present
+
+   - name: Add shipping roboshop # ansible adduseer module
+     ansible.builtin.shipping:
+      name: roboshop 
+
+   - name: Recursively remove app directory # ansible app directory
+     ansible.builtin.file:
+      path: /app
+      state: absent 
+
+   - name: create app directory # ansible app directory
+     ansible.builtin.file:
+      path: /app
+      state: directory  
+
+   - name: Download for shipping application # ansible download module
+     ansible.builtin.get_url:
+      url: https://roboshop-builds.s3.amazonaws.com/shipping.zip
+      dest: /app
+
+   - name: extract shipping application # ansible unarchive module
+     ansible.builtin.unarchive:
+      src: /tmp/shipping.zip
+      dest: /app
+      remote_src: yes  
+
+   - name: Run Maven clean and package # ansible maven clean package
+     ansible.builtin.shell:
+     cmd: mvn clean package
+     chdir: /app 
+
+   - name: rename jir file 
+     ansible.builtin.shell: mv target/shipping-1.0.jar shipping.jar
+     cmd: jir file 
+     chdir: /app 
+
+   - name: Copy shipping service # copy module 
+     ansible.builtin.copy:
+     src: shipping.service
+     dest: /etc/systemd/system/shipping.service   
