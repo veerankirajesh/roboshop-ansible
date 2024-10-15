@@ -33,7 +33,7 @@
       dest: /app
       remote_src: yes  
 
-   - name: mvn  # ansible maven clean package
+   - name: depencie mvn  # ansible maven clean package
      ansible.builtin.shell:
      cmd: mvn 
      chdir: /app 
